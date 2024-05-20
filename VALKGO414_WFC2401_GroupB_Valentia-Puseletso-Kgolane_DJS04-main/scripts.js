@@ -170,11 +170,34 @@ document.querySelector('[data-list-items]').addEventListener('click', (event) =>
     }
 
     if (active) {
-        document.querySelector('[data-list-active]').open = true;
-        document.querySelector('[data-list-blur]').src = active.image;
-        document.querySelector('[data-list-image]').src = active.image;
-        document.querySelector('[data-list-title]').innerText = active.title;
-        document.querySelector('[data-list-subtitle]').innerText = `${authors[active.author]} (${new Date(active.published).getFullYear()})`;
-        document.querySelector('[data-list-description]').innerText = active.description;
+        const newWindow = window.open('', '_blank', 'width=600,height=400');
+        newWindow.document.write(`
+            <html>
+            <head>
+                <title>${active.title}</title>
+                <style>
+                    body { font-family: Arial, sans-serif; padding: 20px; background-color: #f4f4f9; }
+                    .book-details { text-align: center; }
+                    .book-image { max-width: 200px; border-radius: 10px; }
+                    .book-title { font-size: 2rem; color: #ff69b4; }
+                    .book-author { color: #ff69b4; }
+                    .book-description { margin-top: 20px; color: #333; font-size: 1rem; }
+                    .back-button { margin-top: 20px; padding: 10px 20px; background-color: #ff69b4; color: white; border: none; border-radius: 5px; cursor: pointer; }
+                    .back-button:hover { background-color: #ff1493; }
+                </style>
+            </head>
+            <body>
+                <div class="book-details">
+                    <img class="book-image" src="${active.image}" alt="${active.title}">
+                    <div class="book-info">
+                        <h2 class="book-title">${active.title}</h2>
+                        <p class="book-author">${authors[active.author]}</p>
+                        <p class="book-description">${active.description}</p>
+                        <button class="back-button" onclick="window.close()">Back to Books</button>
+                    </div>
+                </div>
+            </body>
+            </html>
+        `);
     }
 });

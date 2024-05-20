@@ -1,58 +1,44 @@
-// BookPreview.js
-
-class BookPreview extends HTMLElement {
-    constructor() {
-        super();
-        this.attachShadow({ mode: 'open' });
-    }
-
-    connectedCallback() {
-        this.render();
-    }
-
-    set data(data) {
-        this._data = data;
-        this.render();
-    }
-
-    render() {
-        this.shadowRoot.innerHTML = `
-            <style>
-                .preview {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    padding: 10px;
-                    border: 1px solid #ccc;
-                    border-radius: 5px;
-                    margin: 10px;
-                    width: 150px;
-                }
-                .preview__image {
-                    width: 100px;
-                    height: 150px;
-                }
-                .preview__info {
-                    text-align: center;
-                }
-                .preview__title {
-                    font-size: 16px;
-                    font-weight: bold;
-                }
-                .preview__author {
-                    font-size: 14px;
-                    color: #555;
-                }
-            </style>
-            <div class="preview">
-                <img class="preview__image" src="${this._data.image}" alt="${this._data.title}" />
-                <div class="preview__info">
-                    <h3 class="preview__title">${this._data.title}</h3>
-                    <div class="preview__author">${this._data.author}</div>
+/*export function createBookElement({ author, id, image, title }, authors) {
+    const element = document.createElement('button');
+    element.classList = 'preview';
+    element.setAttribute('data-preview', id);
+    element.innerHTML = `
+        <img class="preview__image" src="${image}" />
+        <div class="preview__info">
+            <h3 class="preview__title">${title}</h3>
+            <div class="preview__author">${authors[author]}</div>
+        </div>
+    `;
+    
+    element.addEventListener('click', () => {
+        const newWindow = window.open('', '_blank', 'width=600,height=400');
+        newWindow.document.write(`
+            <html>
+            <head>
+                <title>${title}</title>
+                <style>
+                    body { font-family: Arial, sans-serif; padding: 20px; background-color: #f4f4f9; }
+                    .book-details { text-align: center; }
+                    .book-image { max-width: 200px; border-radius: 10px; }
+                    .book-title { font-size: 2rem; color: #ff69b4; }
+                    .book-author { color: #ff69b4; }
+                    .book-description { margin-top: 20px; color: #333; font-size: 1rem; }
+                </style>
+            </head>
+            <body>
+                <div class="book-details">
+                    <img class="book-image" src="${image}" alt="${title}">
+                    <div class="book-info">
+                        <h2 class="book-title">${title}</h2>
+                        <p class="book-author">${authors[author]}</p>
+                        <p class="book-description">${description}</p>
+                    </div>
                 </div>
-            </div>
-        `;
-    }
-}
+            </body>
+            </html>
+        `);
+    });
 
-customElements.define('book-preview', BookPreview);
+    return element;
+}
+*/
